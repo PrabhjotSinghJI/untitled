@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_animated_button: ^2.0.3
   email_validator: any
+  delayed_display: ^2.0.0
+  shared_preferences: ^2.1.2
+
 
 
 dev_dependencies:

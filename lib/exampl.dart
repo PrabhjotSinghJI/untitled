@@ -3,6 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 
+import 'loginotp.dart';
+
+
+
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -62,7 +66,7 @@ class _LoginState extends State<Login> {
                 child: TextFormField(
                   obscureText: true,
                   decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.remove_red_eye_outlined,
+                      prefixIcon: Icon(Icons.remove_red_eye_outlined,
                           color: Colors.black),
                       fillColor: Colors.white,
                       filled: true,
@@ -97,25 +101,26 @@ class _LoginState extends State<Login> {
                   //   login();
                   // }
                 }),
-            ElevatedButton(
-                child: const Text("Check Demo",
-                    style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  // if (emailKey.currentState!.validate()) {
-                  //   login();
-                  // }
-                }),
+            // ElevatedButton(
+            //     child: const Text("Check Demo",
+            //         style: TextStyle(color: Colors.white)),
+            //     onPressed: () {
+            //       // if (emailKey.currentState!.validate()) {
+            //       //   login();
+            //       // }
+            //     }),
             AnimatedButton(
-              width: 200,
-              text: 'SUBMIT',
+               width: 150,
+              backgroundColor:Colors.blue,
+              text: 'Login With OTP',
               selectedTextColor: Colors.black,
               transitionType: TransitionType.BOTTOM_TO_TOP,
               textStyle: const TextStyle(
-                  fontSize: 28,
-                  letterSpacing: 5,
-                  color: Colors.deepOrange,
-                  fontWeight: FontWeight.w300),
-              onPress: () {},
+                  color: Colors.white,
+                  ),
+              onPress: () {
+                 Navigator.push(context,MaterialPageRoute(builder: (context) => LoginOtp()),);
+              },
             )
           ],
         ),
@@ -124,6 +129,6 @@ class _LoginState extends State<Login> {
   }
 
   void login() {
-    print("mai chll gya");
+    print("");
   }
 }

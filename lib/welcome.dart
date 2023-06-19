@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:untitled/exampl.dart';
+import 'package:untitled/onboarding/onboard.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({super.key});
@@ -14,18 +15,20 @@ class _WelcomeState extends State<Welcome> {
   @override
   void initState() {
     super.initState();
+
     Timer(
       const Duration(seconds: 2),() {
 
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const Login(), ),);
+          builder: (context) => const OnBoard(), ),);
 
     },);
   }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
