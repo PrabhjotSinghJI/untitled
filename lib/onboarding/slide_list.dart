@@ -20,10 +20,6 @@ final slideList = [
       title: "Professional Hands",
       description:
       "All of your data will be secure with us.",
-      image: "images/slider3.png"),  Slide(
-      title: "Professional Hands",
-      description:
-      "All of your data will be secure with us.",
-      image: "assets/slider3.png"),
+      image: "images/slider3.png"),
 
 ];

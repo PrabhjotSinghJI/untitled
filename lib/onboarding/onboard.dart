@@ -1,8 +1,10 @@
 import 'package:delayed_display/delayed_display.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled/exampl.dart';
 import 'package:untitled/onboarding/slide_dots.dart';
 import 'package:untitled/onboarding/slide_items.dart';
 import 'package:untitled/onboarding/slide_list.dart';
@@ -99,7 +101,7 @@ class _OnBoardState extends State<OnBoard> {
                             userStateSave();
                             Navigator.of(context)
                                 .pushReplacement(MaterialPageRoute(
-                              builder: (context) => const LoginOtp(),
+                              builder: (context) => const Login(),
                             ));
                           },
                           color: const Color(0xff2b6747),

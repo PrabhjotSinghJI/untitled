@@ -38,6 +38,8 @@ dependencies:
   email_validator: any
   delayed_display: ^2.0.0
   shared_preferences: ^2.1.2
+  firebase_auth: ^4.6.3
+  firebase_core: ^2.14.0
 
 
 
