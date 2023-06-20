@@ -1,5 +1,3 @@
-
-
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -181,13 +179,13 @@ class _LoginState extends State<Login> {
               actions: [
                 TextButton(onPressed: () {
                   Navigator.pop(ctx);
-                }, child: Text("ok"))
+                }, child: const Text("ok"))
               ],
             ),);
       }
     }
   }
-    void updateStatus() {
+  void updateStatus() {
       setState(() {
         if (_isVisible) {
           _isVisible = false;
