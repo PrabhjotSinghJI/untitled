@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:untitled/selectbrand.dart';
-
 import 'loginotp.dart';
 
 class Login extends StatefulWidget {
@@ -120,14 +119,6 @@ class _LoginState extends State<Login> {
                 onPressed: () {
                   signup();
                 }),
-            // ElevatedButton(
-            //     child: const Text("Check Demo",
-            //         style: TextStyle(color: Colors.white)),
-            //     onPressed: () {
-            //       // if (emailKey.currentState!.validate()) {
-            //       //   login();
-            //       // }
-            //     }),
             AnimatedButton(
               width: 150,
               backgroundColor: Colors.blue,
@@ -163,19 +154,39 @@ class _LoginState extends State<Login> {
 
   Future<void> login(String email, String password) async {
     try {
-      FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email, password: password).then((value) =>
-      {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Brand(),))
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email, password: password)
+      .then((value) => {
+      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>  const Brand())),
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == "wrong-password") {
-        print("wrong password");
+        showDialog(context: context, builder: (ctx) =>
+            AlertDialog(
+              title: const Text("Error", style: TextStyle(color: Colors.red),),
+              content: const Text("Password"),
+              actions: [
+                TextButton(onPressed: () {
+                  Navigator.pop(ctx);
+                }, child: const Text("ok"))
+              ],
+            ),);
+      } else if (e.code == "too-many-requests") {
+        showDialog(context: context, builder: (ctx) =>
+            AlertDialog(
+              title: const Text("Request Error", style: TextStyle(color: Colors.red),),
+              content: const Text(" Network  "),
+              actions: [
+                TextButton(onPressed: () {
+                  Navigator.pop(ctx);
+                }, child: Text("ok"))
+              ],
+            ),);
       }
     }
   }
-
     void updateStatus() {
       setState(() {
         if (_isVisible) {
