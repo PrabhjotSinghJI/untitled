@@ -11,7 +11,13 @@ class LoginOtp extends StatefulWidget {
 class _LoginOtpState extends State<LoginOtp> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(backgroundColor: Colors.white24,
+      body: Center(
+        child: TextFormField(
+
+
+        ),
+      ),
 
 
     );

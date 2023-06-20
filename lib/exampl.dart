@@ -19,6 +19,8 @@ class _LoginState extends State<Login> {
   final GlobalKey<FormState> emailKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+  bool _isVisible = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class _LoginState extends State<Login> {
                 child: Form(
                   key: emailKey,
                   child: TextFormField(
+
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                         prefixIcon:
@@ -66,17 +69,22 @@ class _LoginState extends State<Login> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
-                  obscureText: true,
+                  obscureText:  _isVisible ? false : true,
                   controller: passwordController,
                   decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.remove_red_eye_outlined,
-                          color: Colors.black),
                       fillColor: Colors.white,
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),
-                      hintText: "Password"),
+                      hintText: "Password",
+                    suffixIcon: IconButton(
+                      onPressed: () => updateStatus(),
+                      icon:
+                      Icon(_isVisible ? Icons.visibility : Icons.visibility_off),
+                    ),
+                  ),
+                  
                   validator: (e) {
                     if (emailController.value.text.isEmpty) {
                       return "Enter Password";
@@ -92,6 +100,7 @@ class _LoginState extends State<Login> {
                 child:
                     const Text("Login", style: TextStyle(color: Colors.white)),
                 onPressed: () {
+
                   if (emailKey.currentState!.validate()) {
                     Navigator.push(context,MaterialPageRoute(builder: (context) => const Brand()),);
                   }
@@ -146,5 +155,11 @@ print("object");
     } catch (e) {
       print(e);
     }
+  }
+
+  void updateStatus() {
+    setState(() {
+      _isVisible = !_isVisible;
+    });
   }
 }
