@@ -162,25 +162,29 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> login(String email, String password) async {
-    try{
-      FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) => {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const Brand(),))
+    try {
+      FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email, password: password).then((value) =>
+      {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const Brand(),))
       });
-  } on FirebaseAuthException catch (e) {
-    if(e.code == "wrong-password"){
-      print("wrong password");
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "wrong-password") {
+        print("wrong password");
+      }
     }
   }
 
-
-  void updateStatus() {
-    setState(() {
-      if(_isVisible){
-        _isVisible = false;
-      }
-      else{
-        _isVisible = true;
-      }
-    });
+    void updateStatus() {
+      setState(() {
+        if (_isVisible) {
+          _isVisible = false;
+        }
+        else {
+          _isVisible = true;
+        }
+      });
+    }
   }
-}
+
