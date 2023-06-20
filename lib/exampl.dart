@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +7,6 @@ import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:untitled/selectbrand.dart';
 
 import 'loginotp.dart';
-
-
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -20,7 +20,6 @@ class _LoginState extends State<Login> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   bool _isVisible = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +40,10 @@ class _LoginState extends State<Login> {
                 child: Form(
                   key: emailKey,
                   child: TextFormField(
-
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                        prefixIcon:
-                            const Icon(Icons.email_outlined, color: Colors.black),
+                        prefixIcon: const Icon(Icons.email_outlined,
+                            color: Colors.black),
                         fillColor: Colors.white,
                         filled: true,
                         border: OutlineInputBorder(
@@ -53,12 +51,9 @@ class _LoginState extends State<Login> {
                         ),
                         hintText: "Email"),
                     validator: (e) {
-                      if (emailController.value.text.isEmpty) {
-                        return "Email is required";
-                      }else if(EmailValidator.validate(emailController.value.text)){
+                      if (EmailValidator.validate(emailController.value.text)) {
                         return "Invalid Email";
-                      }
-                      else {
+                      } else {
                         return null;
                       }
                     },
@@ -72,22 +67,22 @@ class _LoginState extends State<Login> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
-                  obscureText:  _isVisible ? false : true,
+                  obscureText: _isVisible ? false : true,
                   controller: passwordController,
                   decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      hintText: "Password",
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                    hintText: "Password",
                     suffixIcon: IconButton(
                       onPressed: () => updateStatus(),
-                      icon:
-                      Icon(_isVisible ? Icons.visibility : Icons.visibility_off),
+                      icon: Icon(
+                          _isVisible ? Icons.visibility : Icons.visibility_off),
                     ),
                   ),
-                  
+
                   validator: (e) {
                     if (emailController.value.text.isEmpty) {
                       return "Enter Password";
@@ -103,10 +98,7 @@ class _LoginState extends State<Login> {
                 child:
                     const Text("Login", style: TextStyle(color: Colors.white)),
                 onPressed: () {
-
-                  if (emailKey.currentState!.validate()) {
-                    Navigator.push(context,MaterialPageRoute(builder: (context) => const Brand()),);
-                  }
+                  if (emailKey.currentState!.validate()) {}
                 }),
             ElevatedButton(
                 child: const Text("Create a account",
@@ -123,16 +115,19 @@ class _LoginState extends State<Login> {
             //       // }
             //     }),
             AnimatedButton(
-               width: 150,
-              backgroundColor:Colors.blue,
+              width: 150,
+              backgroundColor: Colors.blue,
               text: 'Login With OTP',
               selectedTextColor: Colors.black,
               transitionType: TransitionType.BOTTOM_TO_TOP,
               textStyle: const TextStyle(
-                  color: Colors.white,
-                  ),
+                color: Colors.white,
+              ),
               onPress: () {
-                 Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginOtp()),);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginOtp()),
+                );
               },
             )
           ],
@@ -144,21 +139,22 @@ class _LoginState extends State<Login> {
   Future<void> signup() async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.value.text,
-        password: passwordController.value.text
-      );
-
+          email: emailController.value.text,
+          password: passwordController.value.text);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-      } else if (e.code == 'email-already-in-use') {
-      }
-    } catch (e) {
-    }
+      } else if (e.code == 'email-already-in-use') {}
+    } catch (e) {}
   }
 
   void updateStatus() {
     setState(() {
-      _isVisible = !_isVisible;
+      if(_isVisible){
+        _isVisible = false;
+      }
+      else{
+        _isVisible = true;
+      }
     });
   }
 }
