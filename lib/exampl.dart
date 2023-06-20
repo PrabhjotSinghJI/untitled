@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +15,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final GlobalKey<FormState> emailKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> passwordKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   bool _isVisible = false;
@@ -24,116 +23,116 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("images/BLogin.jpg"), fit: BoxFit.cover)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 250,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Form(
-                  key: emailKey,
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.email_outlined,
-                            color: Colors.black),
-                        fillColor: Colors.white,
+      backgroundColor: Colors.grey,
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                width: 250,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Form(
+                    key: emailKey,
+                    child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
                         filled: true,
+                        hintText: "Email",
+                        prefixIcon: const Icon(Icons.email_outlined,
+                            color: Colors.black54, size: 20),
+                        fillColor: Colors.white,
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: BorderSide.none,
                         ),
-                        hintText: "Email"),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Enter your email";
+                        } else if (!EmailValidator.validate(
+                            emailController.value.text)) {
+                          return "Email invalid";
+                        } else {
+                          return null;
+                        }
+                      },
+                      controller: emailController,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 250,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    obscureText: _isVisible ? false : true,
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      hintText: "Password",
+                      suffixIcon: IconButton(
+                        onPressed: () => updateStatus(),
+                        icon: Icon(
+                            _isVisible ? Icons.visibility : Icons.visibility_off),
+                      ),
+                    ),
+
                     validator: (e) {
-                      if(e!.isEmpty){
-                        return  "Email required";
-                      }
-                      if (EmailValidator.validate(emailController.value.text)) {
-                        return "Invalid Email";
+                      if (emailController.value.text.isEmpty) {
+                        return "Enter Password";
                       } else {
                         return null;
                       }
                     },
-                    controller: emailController,
+                    // controller: emailController,
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 250,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  obscureText: _isVisible ? false : true,
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    hintText: "Password",
-                    suffixIcon: IconButton(
-                      onPressed: () => updateStatus(),
-                      icon: Icon(
-                          _isVisible ? Icons.visibility : Icons.visibility_off),
-                    ),
-                  ),
-
-                  validator: (e) {
-                    if (emailController.value.text.isEmpty) {
-                      return "Enter Password";
-                    } else {
-                      return null;
-                    }
-                  },
-                  // controller: emailController,
+              ElevatedButton(
+                  child:
+                      const Text("Login", style: TextStyle(color: Colors.white)),
+                  onPressed: () {
+                    setState(() {});
+                    if (emailKey.currentState!.validate()) {}
+                  }),
+              ElevatedButton(
+                  child: const Text("Create a account",
+                      style: TextStyle(color: Colors.white)),
+                  onPressed: () {
+                    signup();
+                  }),
+              // ElevatedButton(
+              //     child: const Text("Check Demo",
+              //         style: TextStyle(color: Colors.white)),
+              //     onPressed: () {
+              //       // if (emailKey.currentState!.validate()) {
+              //       //   login();
+              //       // }
+              //     }),
+              AnimatedButton(
+                width: 150,
+                backgroundColor: Colors.blue,
+                text: 'Login With OTP',
+                selectedTextColor: Colors.black,
+                transitionType: TransitionType.BOTTOM_TO_TOP,
+                textStyle: const TextStyle(
+                  color: Colors.white,
                 ),
-              ),
-            ),
-            ElevatedButton(
-                child:
-                    const Text("Login", style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  if (emailKey.currentState!.validate()) {}
-                }),
-            ElevatedButton(
-                child: const Text("Create a account",
-                    style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  signup();
-                }),
-            // ElevatedButton(
-            //     child: const Text("Check Demo",
-            //         style: TextStyle(color: Colors.white)),
-            //     onPressed: () {
-            //       // if (emailKey.currentState!.validate()) {
-            //       //   login();
-            //       // }
-            //     }),
-            AnimatedButton(
-              width: 150,
-              backgroundColor: Colors.blue,
-              text: 'Login With OTP',
-              selectedTextColor: Colors.black,
-              transitionType: TransitionType.BOTTOM_TO_TOP,
-              textStyle: const TextStyle(
-                color: Colors.white,
-              ),
-              onPress: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginOtp()),
-                );
-              },
-            )
-          ],
+                onPress: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginOtp()),
+                  );
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -152,10 +151,9 @@ class _LoginState extends State<Login> {
 
   void updateStatus() {
     setState(() {
-      if(_isVisible){
+      if (_isVisible) {
         _isVisible = false;
-      }
-      else{
+      } else {
         _isVisible = true;
       }
     });
