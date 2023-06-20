@@ -57,7 +57,6 @@ class _LoginState extends State<Login> {
                         return "Email is required";
                       }else if(EmailValidator.validate(emailController.value.text)){
                         return "Invalid Email";
-
                       }
                       else {
                         return null;
